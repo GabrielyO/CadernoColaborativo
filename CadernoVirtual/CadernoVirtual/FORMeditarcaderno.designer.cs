@@ -442,11 +442,11 @@
             this.AutoScroll = true;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1584, 741);
+            this.ClientSize = new System.Drawing.Size(1362, 741);
             this.Controls.Add(this.PANELcadastrar);
             this.Name = "FORMeditarcaderno";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FORMeditarcaderno";
+            this.Text = "Editar Caderno";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.PANELcadastrar.ResumeLayout(false);
             this.PANELcadastrar.PerformLayout();
