@@ -46,7 +46,7 @@
             this.txtC.Name = "txtC";
             this.txtC.ReadOnly = true;
             this.txtC.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtC.Size = new System.Drawing.Size(587, 386);
+            this.txtC.Size = new System.Drawing.Size(1350, 729);
             this.txtC.TabIndex = 0;
             this.txtC.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -56,7 +56,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(587, 386);
+            this.ClientSize = new System.Drawing.Size(1350, 729);
             this.Controls.Add(this.txtC);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FORMconteudo";

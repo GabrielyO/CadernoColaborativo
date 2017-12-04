@@ -74,6 +74,7 @@ namespace CadernoVirtual
         {
             MySqlCommand cmd = Conectar();
             MySqlCommand cmd2 = Conectar();
+            MySqlCommand cmd3 = Conectar();
             cmd.CommandText = "SELECT DISTINCT(nome) FROM conteudo WHERE idCaderno = @idCaderno;";
             cmd.Parameters.AddWithValue("@idCaderno", idCadernoI);
 
@@ -108,9 +109,23 @@ namespace CadernoVirtual
                         cmd2.Connection.Close();
                         erro = "Falha ao fechar conexão";
                     }
-
-                    cmd.Connection.Close();
+                    cmd.Connection.Close();                    
                 }
+                cmd3.CommandText = "SELECT DISTINCT m.nome FROM materia m WHERE m.nome != ALL(SELECT DISTINCT c.nome FROM conteudo c);";
+                cmd3.Connection.Open();
+
+                MySqlDataReader dr3 = cmd3.ExecuteReader();
+
+                if (dr3.HasRows)
+                {
+                    while (dr3.Read())
+                    {
+                        string mat3 = dr3.GetString(0);
+                        CBmateriaEx.Items.Add(mat3);
+                    }
+                }
+                erro = "Falha ao fechar conexão";
+                cmd3.Connection.Close();
             }
             catch
             {
@@ -224,8 +239,8 @@ namespace CadernoVirtual
         //PAINEIS E VOLTAR
         private void BTNexcluirConteudo_Click(object sender, EventArgs e)
         {
-            PANELaddConteudo.Visible = false;
             PANELexcluirConteudo.Visible = true;
+            PANELaddConteudo.Visible = false;            
             PANELexcluirMateria.Visible = false;
             PANELaddMateria.Visible = false;
 
@@ -235,9 +250,9 @@ namespace CadernoVirtual
         }
         private void BTNexcluirMateria_Click(object sender, EventArgs e)
         {
-            PANELaddConteudo.Visible = false;
-            PANELexcluirConteudo.Visible = false;
             PANELexcluirMateria.Visible = true;
+            PANELaddConteudo.Visible = false;
+            PANELexcluirConteudo.Visible = false;            
             PANELaddMateria.Visible = false;
 
             PreencherCBtitulo();
@@ -252,10 +267,10 @@ namespace CadernoVirtual
         }
         private void BTNcriarMateria_Click(object sender, EventArgs e)
         {
+            PANELaddMateria.Visible = true;
             PANELaddConteudo.Visible = false;
             PANELexcluirConteudo.Visible = false;
-            PANELexcluirMateria.Visible = false;
-            PANELaddMateria.Visible = true;
+            PANELexcluirMateria.Visible = false;            
 
             PreencherCBtitulo();
             PreencherCBmaterias();
@@ -271,6 +286,43 @@ namespace CadernoVirtual
             PreencherCBtitulo();
             PreencherCBmaterias();
             PreencherCBmatCont();
+        }
+
+        //EXCLUIR CADERNO
+        private void BTNexcluirCaderno_Click(object sender, EventArgs e)
+        {
+            string erro = "";
+            try
+            {
+                MySqlCommand cmd = Conectar();
+                cmd.CommandText = "DELETE FROM conteudo WHERE idCaderno = @idCaderno;";
+                cmd.Parameters.AddWithValue("@idCaderno", idCadernoI);
+
+                erro = "Falha na conexão ao banco (Exclusão de caderno - parte 1)";
+                cmd.Connection.Open();
+                erro = "Falha ao excluir conteudos do caderno";
+                cmd.ExecuteNonQuery();
+                erro = "Falha ao fechar conexão";
+                cmd.Connection.Close();
+
+                MySqlCommand cmd2 = Conectar();
+                cmd2.CommandText = "DELETE FROM caderno WHERE idCaderno = @idCaderno;";
+                cmd2.Parameters.AddWithValue("@idCaderno", idCadernoI);
+
+                erro = "Falha na conexão ao banco (Exclusão de caderno - parte 2)";
+                cmd2.Connection.Open();
+                erro = "Falha ao excluir caderno";
+                cmd2.ExecuteNonQuery();
+                erro = "Falha ao fechar conexão";
+                cmd2.Connection.Close();
+
+                MessageBox.Show("Caderno excluído com sucesso!");
+                this.Close();
+            }
+            catch
+            {
+                MessageBox.Show(erro);
+            }
         }
 
         //EXCLUIR CONTEÚDO
