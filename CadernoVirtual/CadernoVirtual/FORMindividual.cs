@@ -37,7 +37,7 @@ namespace CadernoVirtual
         {
             MySqlCommand cmd = new MySqlCommand
             {
-                Connection = new MySqlConnection("Server=127.0.0.1;Database=caderno;Uid=root;Pwd=")//Lembrar de alterar PWD: root
+                Connection = new MySqlConnection("Server=127.0.0.1;Database=caderno;Uid=root;Pwd=root")//Lembrar de alterar PWD: root
             };
             return cmd;
         }
